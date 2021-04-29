@@ -204,6 +204,12 @@ int Distance= Distance_test();
   {
     counter++; 
     
+     if(counter<2){
+    turn_left(speed);
+    //left();
+    
+    stop(); 
+    }
     
     if(counter==2)
       { stop();
@@ -218,23 +224,24 @@ int Distance= Distance_test();
     byte value = PCF8574Read() | 0x3F;         //read Pin
     if((Distance < 5) || (value != 0xFF))
     {
-     move_forward(speedL,speedR);
-     
-    }else{
-    turn_right(speed);
-    stop();
-      
+      turn_right(speed);
+     stop();
+     delay(1000);
+      counter=0;  
     }
+    else{
+    move_forward(speedL,speedR);
     counter=0;
-    }
-  
-    turn_left(speed);
-    //left();
     
-    stop(); 
    
-  }
+    
+    }
+    
+    }
+   
+   
   
+  }
   else
   {
      move_forward(speedL,speedR); 
