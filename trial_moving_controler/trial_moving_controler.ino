@@ -1,3 +1,4 @@
+
 // PIN configuration from official website
 
 #include <Wire.h>
@@ -12,13 +13,16 @@
 #define TRIG   3
 #define Addr  0x20
 
+#define beep_on  PCF8574Write(0xDF & PCF8574Read())
+#define beep_off PCF8574Write(0x20 | PCF8574Read())
+
 
 int Distance = 0;
 int counter ;
 
 int speed=50;
-int speedL=50;
-int speedR=50;
+int speedL;
+int speedR;
 
 
 void PCF8574Write(byte data);
@@ -40,6 +44,8 @@ void stop();
 int Distance_test();
 
 void obstacle_detection(int &counter  );
+
+void speed_controller(int &speedL, int &speedR);
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void setup() {
@@ -68,10 +74,19 @@ turn_left(speed);
 
 }
 rotate(4,speed);*/
+
+
 Distance= Distance_test();
+speed_controller(speedL,speedR);
   
 obstacle_detection( counter);
 Serial.print(counter);
+
+//after finishing
+/*beep_on;
+rotate(10,speed);
+beep_off;
+delay(1000);*/
 
 }
 
@@ -145,7 +160,7 @@ void rotate(int num_rotation, int speed)
        for(int j =0; j<=2;j++)
        {
         turn_right(speed);
-      
+         
        }
         
     } 
@@ -249,8 +264,28 @@ int Distance= Distance_test();
   }
   
 }
-    
-    
+
+void speed_controller(int &speedL, int &speedR)
+{ 
+  
+  int Distance =Distance_test();
+  PCF8574Write(0xC0 | PCF8574Read());   //set Pin High
+    byte value = PCF8574Read() | 0x3F;         //read Pin
+    if((Distance < 5) || (value != 0xFF))
+  {
+    speedL=0;
+    speedR=0;
+  } else if(Distance<=20)
+  {speedR=40;
+   speedL=40;
+    } else {
+      speedR=50;
+      speedL=50;
+      
+    }
+ }
+      
+ 
     
     
     
