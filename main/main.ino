@@ -9,19 +9,21 @@
 #define ECHO   2
 #define TRIG   3
 #define Addr  0x20
-#define MAX_RANG     (520)          //the max measurement vaule of the module is 520cm(a little bit longer than  effective max range)
-#define ADC_SOLUTION     (1023.0)   //ADC accuracy of Arduino UNO is 10bit
-#define beep_on  PCF8574Write(0xDF & PCF8574Read())
-#define beep_off PCF8574Write(0x20 | PCF8574Read())
 
 
+
+ int sensityPin = A4; 
+ //float dist_t, sensity_t;
+ 
 int Distance = 0;
 int counter ;
-float wallDistance;
+//float wallDistance1;
+//float wallDistance2;
+
 
 int speed = 50;
-int speedL = 60;
-int speedR = 60;
+int speedL = 72;
+int speedR = 73;
 
 //////////////////////////////////////////////////
 void PCF8574Write(byte data);
@@ -36,9 +38,9 @@ void turn_right(int speed);
 
 void move_forward(int speedL, int speedR);
 
-void move_backward(int speedL, int speedR);
 
-void rotate(int num_rotation, int speed);
+
+
 
 void stop();
 
@@ -48,11 +50,14 @@ bool obstacle_detection();
 
 void speed_controller(int &speedL, int &speedR);
 
-float wallDistanceTest();
+//float Wall_Distance_test();
 
-void wallFollower(bool obstacle, int speed);
+void wallFollower(int speedL, int speedR, int speed);
 
 int IR_reading();
+
+;
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -67,18 +72,11 @@ void setup() {
 void loop() {
 
   Distance = Distance_test();
-  //speed_controller(speedL,speedR);
+  
 
 
-  wallFollower(speed);
+  wallFollower(speedL, speedR,  speed);
 
-  wallDistance = wallDistanceTest();
-  Serial.print(wallDistance, 0);
-  Serial.println("cm");
-  //after finishing
-  /*beep_on;
-    rotate(10,speed);
-    beep_off;
-    delay(1000);*/
+  
 
 }

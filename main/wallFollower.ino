@@ -1,5 +1,5 @@
 // Our main alogrithm to transverse the maze
-void wallFollower(int speed)
+void wallFollower(int speedL, int speedR, int speed)
 {
   int IR_value = IR_reading();
   // Serial.print ("Sensor: ");
@@ -28,10 +28,10 @@ void wallFollower(int speed)
 
     }
     else {
-      move_forward(speedL, speedR);
+      move_forward( speedL,  speedR);
     }
   }
   else {
-    move_forward(speedL, speedR);
+    move_forward( speedL,  speedR);
   }
 }

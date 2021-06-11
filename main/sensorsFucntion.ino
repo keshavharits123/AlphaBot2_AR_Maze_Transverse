@@ -70,18 +70,5 @@ int IR_reading()
 }
 
 
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-float wallDistanceTest()
-{
-  float dist_t, sensity_t;
-
-  // read the value from the sensor:
-  sensity_t = analogRead(A4);
-  // turn the ledPin on
-
-  dist_t = sensity_t * MAX_RANG  / ADC_SOLUTION;//
-
-
-  return (dist_t);
-}
