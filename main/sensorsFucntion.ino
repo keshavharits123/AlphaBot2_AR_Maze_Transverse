@@ -37,7 +37,7 @@ bool obstacle_detection()
 
   PCF8574Write(0xC0 | PCF8574Read());   //set Pin High
   byte value = PCF8574Read() | 0x3F;         //read Pin
-  if ((Distance < 5) || (value != 0xFF))     //Ultrasonic range ranging 2cm to 400cm
+  if ((Distance < 3) || (value != 0xFF))     //Ultrasonic range ranging 2cm to 400cm
 
   {
     return true;
@@ -72,3 +72,38 @@ int IR_reading()
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+float Left_Wall_test()         // Measure the distance
+{
+  digitalWrite(TRIG_3, LOW);   // set trig pin low 2μs
+  delayMicroseconds(2);
+  digitalWrite(TRIG_3, HIGH);  // set trig pin 10μs , at last 10us
+  delayMicroseconds(10);
+  digitalWrite(TRIG_3, LOW);    // set trig pin low
+  float Fdistance = pulseIn(ECHO_3, HIGH);  // Read echo pin high level time(us)
+  Fdistance = Fdistance / 58;    //Y m=（X s*344）/2
+  // X s=（ 2*Y m）/344 ==》X s=0.0058*Y m ==》cm = us /58
+  if(Fdistance<=2 )
+  {
+    Fdistance=0;
+  }
+  return Fdistance;
+}
+
+
+float Right_Wall_test()         // Measure the distance
+{
+  digitalWrite(TRIG_2, LOW);   // set trig pin low 2μs
+  delayMicroseconds(2);
+  digitalWrite(TRIG_2, HIGH);  // set trig pin 10μs , at last 10us
+  delayMicroseconds(10);
+  digitalWrite(TRIG_2, LOW);    // set trig pin low
+  float Fdistance = pulseIn(ECHO_2, HIGH);  // Read echo pin high level time(us)
+  Fdistance = Fdistance / 58;    //Y m=（X s*344）/2
+  // X s=（ 2*Y m）/344 ==》X s=0.0058*Y m ==》cm = us /58
+   if(Fdistance<=2 )
+  {
+    Fdistance=0;
+  }
+  return Fdistance;
+}
