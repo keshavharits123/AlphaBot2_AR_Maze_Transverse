@@ -20,9 +20,7 @@ void wallFollower(int speedL, int speedR, int speed)
       }
       if (LeftWall > 10)
       { delay(150);
-        turn_right(speed);
-        turn_right(speed);
-        turn_right(speed);
+        turn_left(speed);
         delay(150);
         move_forward( speedL,  speedR);
         delay(1000);
