@@ -1,3 +1,4 @@
+//We made this for dodgig the side walls and drive it into straight line. 
 //This is working but we were unable to combine this with our wall follower algorithm.
 
 void speed_controller()
